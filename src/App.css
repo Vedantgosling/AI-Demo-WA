@@ -1,0 +1,62 @@
+:root {
+  /* The Void - Deep dark backgrounds */
+  --bg-core: #030305;
+  --bg-surface: rgba(15, 15, 20, 0.6);
+  
+  /* Neon Accents */
+  --neon-cyan: #00f3ff;
+  --neon-purple: #bc13fe;
+  --neon-green: #00ff66;
+  
+  /* Typography Colors */
+  --text-main: #e2e8f0;
+  --text-muted: #94a3b8;
+  
+  /* UI Elements */
+  --glass-border: rgba(255, 255, 255, 0.08);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background-color: var(--bg-core);
+  color: var(--text-main);
+  font-family: 'Space Grotesk', sans-serif;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  
+  /* Subtle ambient glowing orbs in the background */
+  background-image: 
+    radial-gradient(circle at 15% 50%, rgba(188, 19, 254, 0.08), transparent 40%),
+    radial-gradient(circle at 85% 30%, rgba(0, 243, 255, 0.08), transparent 40%);
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+/* Utility class for our fake AI terminal outputs */
+.font-mono {
+  font-family: 'JetBrains Mono', monospace;
+}
+
+/* The core Glassmorphism utility class we will use everywhere */
+.glass-panel {
+  background: var(--bg-surface);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--glass-border);
+  border-radius: 16px;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+}
+
+/* Glowing text utility */
+.text-glow-cyan {
+  color: var(--neon-cyan);
+  text-shadow: 0 0 10px rgba(0, 243, 255, 0.5);
+}

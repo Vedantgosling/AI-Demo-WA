@@ -1,0 +1,57 @@
+:root {
+  /* Clean, light backgrounds */
+  --bg-core: #f8fafc; 
+  --bg-surface: #ffffff;
+  
+  /* Brand Accents - Sharp tech blue */
+  --accent-primary: #2563eb;
+  --accent-hover: #1d4ed8;
+  
+  /* Typography Colors */
+  --text-main: #0f172a;
+  --text-muted: #64748b;
+  
+  /* Borders */
+  --border-color: #e2e8f0;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background-color: var(--bg-core);
+  color: var(--text-main);
+  font-family: 'Inter', 'Space Grotesk', sans-serif;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* No more blur. Just clean, crisp white cards with soft shadows */
+.crisp-card {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-color);
+  border-radius: 16px;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -2px rgba(0, 0, 0, 0.05);
+  transition: all 0.3s ease;
+}
+
+.crisp-card:hover {
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+  border-color: #cbd5e1;
+}
+
+.font-mono {
+  font-family: 'JetBrains Mono', monospace;
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.animate-spin {
+  animation: spin 1s linear infinite;
+}
