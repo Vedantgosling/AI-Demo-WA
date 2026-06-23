@@ -1,8 +1,7 @@
-import React, { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
+import React, { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { Database, MessageSquare, PenTool, Play, Loader2, CheckCircle2 } from 'lucide-react';
 
-// The fake AI tools we offer
 const tools = [
   {
     id: 'sql',
@@ -33,46 +32,37 @@ export default function Demos() {
   const [isGenerating, setIsGenerating] = useState(false);
   const [output, setOutput] = useState(null);
 
-  // Reset state when switching tools
   const handleToolSwitch = (tool) => {
     setActiveTool(tool);
     setInput('');
     setOutput(null);
   };
 
-  // Simulate an API call
   const handleGenerate = () => {
     if (!input) return;
     setIsGenerating(true);
     setOutput(null);
 
-    // Fake a 1.5-second network request
     setTimeout(() => {
       setIsGenerating(false);
       setOutput(activeTool.fakeOutput);
-    }, 1500);
+    }, 1200);
   };
 
   return (
-    <motion.div 
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5 }}
-      style={{ width: '90%', maxWidth: '1200px', margin: '0 auto', padding: '40px 0' }}
-    >
+    <div style={{ width: '90%', maxWidth: '1200px', margin: '0 auto', padding: '40px 0' }}>
       <div style={{ marginBottom: '40px' }}>
-        <h1 style={{ fontSize: '2.5rem', fontWeight: 800, color: 'var(--text-main)', marginBottom: '12px' }}>
+        <h1 style={{ fontSize: '2.5rem', fontWeight: 800, color: '#fff', marginBottom: '12px' }}>
           Interactive Playground
         </h1>
-        <p style={{ color: 'var(--text-muted)', fontSize: '1.1rem' }}>
+        <p style={{ color: '#94a3b8', fontSize: '1.1rem' }}>
           Test our specialized models in real-time. Select a capability from the sidebar.
         </p>
       </div>
 
       <div style={{ display: 'flex', gap: '32px', flexWrap: 'wrap' }}>
-        
-        {/* Sidebar Navigation */}
-        <div style={{ flex: '1 1 250px', display: 'flex', flexDirection: 'column', gap: '8px' }}>
+        {/* Sidebar */}
+        <div style={{ flex: '1 1 260px', display: 'flex', flexDirection: 'column', gap: '10px' }}>
           {tools.map((tool) => {
             const isActive = activeTool.id === tool.id;
             return (
@@ -84,10 +74,10 @@ export default function Demos() {
                   alignItems: 'center',
                   gap: '12px',
                   padding: '16px',
-                  background: isActive ? '#eff6ff' : 'transparent',
-                  border: isActive ? '1px solid #bfdbfe' : '1px solid transparent',
+                  background: isActive ? 'rgba(0, 243, 255, 0.08)' : 'rgba(255, 255, 255, 0.02)',
+                  border: `1px solid ${isActive ? '#00f3ff' : 'rgba(255, 255, 255, 0.06)'}`,
                   borderRadius: '12px',
-                  color: isActive ? 'var(--accent-primary)' : 'var(--text-muted)',
+                  color: isActive ? '#00f3ff' : '#94a3b8',
                   fontWeight: isActive ? 600 : 500,
                   fontSize: '1rem',
                   cursor: 'pointer',
@@ -95,19 +85,27 @@ export default function Demos() {
                   transition: 'all 0.2s ease'
                 }}
               >
-                <tool.icon size={20} />
+                <tool.icon size={18} />
                 {tool.name}
               </button>
             );
           })}
         </div>
 
-        {/* Main Playground Area */}
-        <div className="crisp-card" style={{ flex: '3 1 600px', padding: '32px', display: 'flex', flexDirection: 'column', gap: '24px' }}>
-          
-          {/* Input Area */}
+        {/* Playground Card Component */}
+        <div style={{ 
+          flex: '3 1 600px', 
+          background: 'rgba(15, 15, 20, 0.6)', 
+          border: '1px solid rgba(255, 255, 255, 0.06)', 
+          borderRadius: '16px', 
+          padding: '32px', 
+          display: 'flex', 
+          flexDirection: 'column', 
+          gap: '24px' 
+        }}>
+          {/* Input Interface */}
           <div>
-            <label style={{ display: 'block', fontSize: '0.9rem', fontWeight: 600, color: 'var(--text-main)', marginBottom: '8px' }}>
+            <label style={{ display: 'block', fontSize: '0.9rem', fontWeight: 600, color: '#fff', marginBottom: '10px' }}>
               Input
             </label>
             <textarea 
@@ -119,28 +117,26 @@ export default function Demos() {
                 minHeight: '120px',
                 padding: '16px',
                 borderRadius: '8px',
-                border: '1px solid var(--border-color)',
-                background: '#f8fafc',
-                color: 'var(--text-main)',
+                border: '1px solid rgba(255, 255, 255, 0.1)',
+                background: '#0a0a0f',
+                color: '#fff',
                 fontSize: '1rem',
                 fontFamily: 'inherit',
                 resize: 'vertical',
                 outline: 'none',
-                transition: 'border-color 0.2s ease'
+                boxSizing: 'border-box'
               }}
-              onFocus={(e) => e.target.style.borderColor = 'var(--accent-primary)'}
-              onBlur={(e) => e.target.style.borderColor = 'var(--border-color)'}
             />
           </div>
 
-          {/* Action Button */}
+          {/* Trigger Mechanism */}
           <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
             <button
               onClick={handleGenerate}
               disabled={isGenerating || !input}
               style={{
-                background: isGenerating || !input ? '#cbd5e1' : 'var(--accent-primary)',
-                color: '#fff',
+                background: isGenerating || !input ? 'rgba(255,255,255,0.05)' : '#00f3ff',
+                color: isGenerating || !input ? '#475569' : '#030305',
                 border: 'none',
                 padding: '12px 24px',
                 borderRadius: '8px',
@@ -154,45 +150,47 @@ export default function Demos() {
               }}
             >
               {isGenerating ? (
-                <><Loader2 size={18} className="animate-spin" /> Processing...</>
+                <><Loader2 size={16} className="animate-spin" /> Processing Infrastructure...</>
               ) : (
-                <><Play size={18} fill="currentColor" /> Run Model</>
+                <><Play size={16} fill="currentColor" /> Run Model</>
               )}
             </button>
           </div>
 
-          {/* Output Area */}
+          {/* Output Interface */}
           <div>
-            <label style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '0.9rem', fontWeight: 600, color: 'var(--text-main)', marginBottom: '8px' }}>
-              Output {output && <CheckCircle2 size={16} color="green" />}
+            <label style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '0.9rem', fontWeight: 600, color: '#fff', marginBottom: '10px' }}>
+              Output {output && <CheckCircle2 size={14} color="#00ff66" />}
             </label>
             <div 
-              className="font-mono"
               style={{
                 width: '100%',
                 minHeight: '160px',
                 padding: '24px',
                 borderRadius: '8px',
-                background: '#0f172a', /* Keep output dark like a real code terminal */
+                background: '#050508',
                 color: '#e2e8f0',
+                fontFamily: "'JetBrains Mono', monospace",
                 fontSize: '0.9rem',
                 whiteSpace: 'pre-wrap',
                 overflowX: 'auto',
-                border: '1px solid var(--border-color)'
+                border: '1px solid rgba(255, 255, 255, 0.05)',
+                boxSizing: 'border-box'
               }}
             >
-              {output ? (
-                <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.5 }}>
-                  {output}
-                </motion.div>
-              ) : (
-                <span style={{ color: '#475569' }}>// Awaiting input sequence...</span>
-              )}
+              <AnimatePresence mode="wait">
+                {output ? (
+                  <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.3 }}>
+                    {output}
+                  </motion.div>
+                ) : (
+                  <span style={{ color: '#475569' }}>// Awaiting instruction layout sequence...</span>
+                )}
+              </AnimatePresence>
             </div>
           </div>
-
         </div>
       </div>
-    </motion.div>
+    </div>
   );
-}
+} 
